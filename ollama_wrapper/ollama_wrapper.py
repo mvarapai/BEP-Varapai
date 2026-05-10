@@ -21,6 +21,7 @@ class OllamaBatchPrompt:
   temperature: float = 0.0
   num_predict: int = 3
   keep_alive: str = "30m"
+  think: bool | None = False
 
   options: dict[str, Any] = field(default_factory=dict)
   timeout: float | None = 60.0
@@ -90,9 +91,19 @@ class OllamaBatchPrompt:
       "options": self._request_options(),
     }
 
+    if self.think is not None:
+      payload["think"] = self.think
+
     client = self._client_or_create()
     response = client.post("/api/chat", json=payload)
-    response.raise_for_status()
+
+    try:
+      response.raise_for_status()
+    except httpx.HTTPStatusError as exc:
+      raise RuntimeError(
+        f"Ollama request failed with status {response.status_code}: "
+        f"{response.text}"
+      ) from exc
 
     data = response.json()
     return data["message"]["content"].strip()

@@ -11,6 +11,7 @@ data/processed/*
 results/generated/*
 results/example/*
 
+!data/processed/russian.csv
 !data/processed/.gitkeep
 !data/predictions/.gitkeep
 !results/generated/.gitkeep
