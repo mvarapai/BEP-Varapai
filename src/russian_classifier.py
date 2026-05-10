@@ -1,6 +1,6 @@
-# gh_helpers.py
-# this file provides helper functions to interact with GitHub API,
-# as well as methods for cleaning resulting messages in Russian
+# russian_classifier.py
+# this file provides methods for cleaning messages in Russian.
+# main exports of this file - fix_mojibrake(..) and build_russian_candidates(..).
 
 from __future__ import annotations
 import re
@@ -20,22 +20,6 @@ CYRILLIC_RE = re.compile(r"[А-Яа-яЁё]")
 
 # filter for texts using either Cyrillic or Latin script
 LETTER_RE = re.compile(r"[A-Za-zА-Яа-яЁё]")
-
-
-# fix Excel interpreting UTF-8 Cyrillic texts as Latin-only encoding
-def fix_mojibake(text: object) -> str:
-  if pd.isna(text):
-    return ""
-  value = str(text)
-
-  # UTF-8 Russian text sometimes appears as Windows-1252/Latin-1 mojibake:
-  # "привет" -> "Ð¿Ñ€Ð¸Ð²ÐµÑ‚"
-  if "Ð" not in value and "Ñ" not in value:
-    return value
-  try:
-    return value.encode("latin1").decode("utf-8")
-  except UnicodeError:
-    return value
 
 
 # functions for basic script check and filtering
