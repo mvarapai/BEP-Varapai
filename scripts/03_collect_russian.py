@@ -10,7 +10,7 @@ import httpx
 import pandas as pd
 from tqdm import tqdm
 
-from src.gh_helpers import build_russian_candidates
+from src.russian_classifier import build_russian_candidates
 
 
 GITHUB_API = "https://api.github.com"
