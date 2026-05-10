@@ -6,12 +6,15 @@ __pycache__/
 venv/
 .env
 
+data/russian_generated/*
 data/predictions/*
 data/processed/*
 results/generated/*
 results/example/*
 
+
 !data/processed/russian.csv
+!data/russian_generated/cyrillic_terms.txt
 !data/processed/.gitkeep
 !data/predictions/.gitkeep
 !results/generated/.gitkeep
